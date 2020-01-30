@@ -2,28 +2,26 @@ import moment from 'moment'
 import DailyEvent from './daily-event'
 import EventType from './event-type'
 
-function getSubTypeSet(eventTypeList: ReadonlyArray<EventType>): Set<string> {
-  const subTypeSet = new Set<string>()
+function getSubTypeList(eventTypeList: ReadonlyArray<EventType>): string[] {
+  const subTypeList: string[] = []
 
   for (const eventType of eventTypeList) {
     if (eventType.subTypeList == null) {
       continue
     }
     for (const eventSubType of eventType.subTypeList) {
-      if (subTypeSet.has(eventSubType.type)) {
-        throw Error(`“${eventSubType.type}” 类型重复，请检查 event-type-list ！`)
-      }
-      subTypeSet.add(eventSubType.type)
+      subTypeList.push(eventSubType.type)
     }
   }
-  return subTypeSet
+
+  return subTypeList
 }
 
 export default function linesProcess(
   todayFileData: string,
   eventTypeList: ReadonlyArray<EventType>
 ): { nowDate: moment.Moment; dateEventList: DailyEvent[] } {
-  const subTypeSet: Set<string> = getSubTypeSet(eventTypeList)
+  const subTypeList: string[] = getSubTypeList(eventTypeList)
 
   const lines: string[] = todayFileData.split('\n')
 
@@ -39,9 +37,13 @@ export default function linesProcess(
       continue
     }
     const dailyEvent = new DailyEvent(lines[i], startOClock)
-    if (!subTypeSet.has(dailyEvent.getType())) {
-      throw Error(`“${dailyEvent.getType()}” 类型不存在，请确认是输入错误还是忘记录入。`)
-    }
+
+    // --- for show data ---
+    dailyEvent.type = subTypeList[Math.floor(subTypeList.length * Math.random())]
+    dailyEvent.detail = Math.random() > 0.75 ? `mock${dailyEvent.type}详情` : ''
+    // if (!subTypeSet.has(dailyEvent.getType())) {
+    //   throw Error(`“${dailyEvent.getType()}” 类型不存在，请确认是输入错误还是忘记录入。`)
+    // }
     dateEventList.push(dailyEvent)
 
     startOClock = dailyEvent.getEndOClock() // 为下一次循环做准备

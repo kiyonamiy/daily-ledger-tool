@@ -12,8 +12,8 @@ export default class DailyEvent {
   private startOClock: moment.Moment
   private endOClock: moment.Moment
   private duration: number
-  private type: string
-  private detail: string
+  public type: string
+  public detail: string
 
   constructor(aLine: string, startOClock: moment.Moment) {
     this.startOClock = startOClock
