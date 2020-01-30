@@ -2,9 +2,9 @@
 
 ## 介绍
 
-将原始数据格式（易于快速记录时间）转换为`JSON`格式，用于前端的数据获取。
+为 [daily-ledger-frontend 项目](https://github.com/KiyonamiYu/daily-ledger-frontend) 提供数据预处理，将原始数据格式（易于快速记录时间）转换为`JSON`格式，用于前端的数据获取。
 
-1. 原始数据格式
+### 原始数据格式
 
 第一行为当天日期，格式为`YYYY-MM-DD`
 
@@ -22,7 +22,7 @@
 12.00 前端 学习typescript语法
 ```
 
-2. `JSON`格式
+### `JSON`格式
 
 ```json
 [

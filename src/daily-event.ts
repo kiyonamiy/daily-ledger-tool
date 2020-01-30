@@ -1,5 +1,13 @@
 import moment from 'moment'
 
+export interface PainDailyEvent {
+  readonly startOClock: string
+  readonly endOClock: string
+  readonly duration: number
+  readonly type: string
+  readonly detail: string
+}
+
 export default class DailyEvent {
   private startOClock: moment.Moment
   private endOClock: moment.Moment
@@ -25,7 +33,23 @@ export default class DailyEvent {
     this.detail = elements.slice(2).join(' ')
   }
 
+  getStartOClock() {
+    return this.startOClock
+  }
+
   getEndOClock() {
     return this.endOClock
+  }
+
+  getDuration() {
+    return this.duration
+  }
+
+  getType() {
+    return this.type
+  }
+
+  getDetail() {
+    return this.detail
   }
 }
